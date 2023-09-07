@@ -30,3 +30,12 @@ def subtract(a, b):
 
     return matrix
 
+def transpose(a):
+    if isVector(a):
+        raise Exception("There's no difference in row and column vectors in python")
+
+    rows = len(a)
+    cols = len(a[0]) 
+
+    return [[a[i][j] for i in range(cols)] for j in range(rows)]
+    
