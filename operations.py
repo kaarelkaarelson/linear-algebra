@@ -1,4 +1,5 @@
 from utils import *
+import numpy as np
 
 def add(a, b):
     if not areSameSize(a, b):
@@ -39,3 +40,37 @@ def transpose(a):
 
     return [[a[i][j] for i in range(cols)] for j in range(rows)]
     
+def multiply(a, b):
+    if len(a[0]) != len(b):
+        raise Exception("Matrices dimensions are not compatible for multiplication")
+
+    multiplication = []
+
+    for i in range(len(a)): # row elements of a
+        row = []
+        for j in range(len(b[0])): # col elements of b
+            sum = 0
+            for k in range(len(a[0])): # matching dimension of a and b
+                sum += a[i][k] * b[k][j]
+            row.append(sum)
+        multiplication.append(row)
+
+    return multiplication
+
+def tensorProduct(a, b):
+    rows = len(a) * len(b) 
+    cols = len(a[0]) * len(b[0])
+    tensorProduct = np.zeros((rows, cols))
+
+    for i in range(len(a)):
+        for j in range(len(a[i])):
+            e = a[i][j]
+            if e == 0:
+                continue
+
+            for k in range(len(b)):
+                for l in range(len(b[k])):
+                    target = b[k][l]
+                    tensorProduct[i*len(b)+k][j*len(b[0])+l] = e * target
+
+    return tensorProduct
